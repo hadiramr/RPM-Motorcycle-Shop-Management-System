@@ -1,0 +1,135 @@
+# Motors Django Project
+
+A Django web application for managing and displaying car listings with brands, models, and images.
+
+## Features
+
+- **Car Management**: Add, edit, and view cars with details like brand, name, year, price, and description
+- **Brand Management**: Organize cars by brands
+- **Image Upload**: Support for car images with automatic resizing
+- **Admin Interface**: Full Django admin interface for managing data
+- **Responsive Design**: Modern Bootstrap-based UI that works on all devices
+
+## Project Structure
+
+```
+my_django_project/
+├── config/                 # Django project settings
+│   ├── settings.py        # Project configuration
+│   ├── urls.py           # Main URL configuration
+│   └── wsgi.py           # WSGI application
+├── motors/               # Main app
+│   ├── models.py         # Database models (Brand, Car)
+│   ├── views.py          # View functions
+│   ├── urls.py           # App URL patterns
+│   ├── admin.py          # Admin interface configuration
+│   └── templates/        # HTML templates
+│       └── motors/
+│           └── car_list.html
+├── media/                # Uploaded files (created automatically)
+├── db.sqlite3           # SQLite database
+├── manage.py            # Django management script
+└── requirements.txt     # Python dependencies
+```
+
+## Installation
+
+1. **Clone or download the project**
+
+2. **Create a virtual environment** (recommended):
+   ```bash
+   python -m venv venv
+   ```
+
+3. **Activate the virtual environment**:
+   - Windows: `venv\Scripts\activate`
+   - macOS/Linux: `source venv/bin/activate`
+
+4. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Run database migrations**:
+   ```bash
+   python manage.py migrate
+   ```
+
+6. **Create a superuser** (optional, for admin access):
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. **Run the development server**:
+   ```bash
+   python manage.py runserver
+   ```
+
+8. **Access the application**:
+   - Main site: http://127.0.0.1:8000/
+   - Admin panel: http://127.0.0.1:8000/admin/
+
+## Usage
+
+### Adding Cars and Brands
+
+1. Go to the admin panel at http://127.0.0.1:8000/admin/
+2. Log in with your superuser credentials
+3. Add brands first, then cars
+4. Upload images for cars (optional)
+
+### Viewing Cars
+
+- Visit the main page to see all cars displayed in a responsive grid
+- Cars are organized by brand and show all relevant details
+
+## Models
+
+### Brand
+- `name`: CharField (max 100 characters)
+
+### Car
+- `brand`: ForeignKey to Brand
+- `name`: CharField (max 100 characters)
+- `year`: PositiveIntegerField
+- `price`: DecimalField (10 digits, 2 decimal places)
+- `description`: TextField (optional)
+- `image`: ImageField (optional, uploaded to 'cars/' directory)
+
+## Dependencies
+
+- **Django 5.2.4**: Web framework
+- **Pillow 11.3.0**: Image processing for ImageField
+- **asgiref 3.9.1**: ASGI utilities
+- **sqlparse 0.5.3**: SQL parsing
+- **tzdata 2025.2**: Timezone data
+
+## Development
+
+### Running Tests
+```bash
+python manage.py test
+```
+
+### Making Database Changes
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### Static Files
+The project uses CDN for Bootstrap, so no static file collection is needed for development.
+
+## Production Deployment
+
+For production deployment, consider:
+
+1. Setting `DEBUG = False` in settings.py
+2. Configuring a proper database (PostgreSQL recommended)
+3. Setting up static file serving
+4. Using environment variables for sensitive settings
+5. Setting up proper media file serving
+
+## License
+
+This project is open source and available under the MIT License. 

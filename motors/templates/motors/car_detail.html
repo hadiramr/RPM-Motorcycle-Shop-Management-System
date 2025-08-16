@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ car.brand.name }} {{ car.name }} - Motors{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'motors:home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'motors:car_list' %}">Cars</a></li>
+            <li class="breadcrumb-item active">{{ car.brand.name }} {{ car.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Car Image -->
+        <div class="col-md-6 mb-4">
+            {% if car.image %}
+                <img src="{{ car.image.url }}" class="img-fluid rounded" alt="{{ car.name }}">
+            {% else %}
+                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 400px;">
+                    <span class="text-muted">No Image Available</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Car Details -->
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ car.brand.name }} {{ car.name }}</h1>
+            <h4 class="text-primary mb-4">${{ car.price|floatformat:2 }}</h4>
+            
+            <div class="row mb-4">
+                <div class="col-6">
+                    <strong>Year:</strong> {{ car.year }}
+                </div>
+                <div class="col-6">
+                    <strong>Model:</strong> {{ car.model }}
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <strong>Fuel Type:</strong> {{ car.get_fuel_type_display }}
+                </div>
+                <div class="col-6">
+                    <strong>Transmission:</strong> {{ car.get_transmission_display }}
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <strong>Mileage:</strong> {{ car.mileage|floatformat:0 }} km
+                </div>
+                <div class="col-6">
+                    {% if car.engine_size %}
+                        <strong>Engine Size:</strong> {{ car.engine_size }}L
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <strong>Date Added:</strong> {{ car.date_added|date:"M d, Y" }}
+                </div>
+                <div class="col-6">
+                    <strong>Status:</strong> 
+                    {% if car.is_available %}
+                        <span class="badge bg-success">Available</span>
+                    {% else %}
+                        <span class="badge bg-danger">Not Available</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if car.description %}
+            <div class="mb-4">
+                <h5>Description</h5>
+                <p>{{ car.description }}</p>
+            </div>
+            {% endif %}
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'motors:add_car' %}" class="btn btn-primary">Add Similar Car</a>
+                <a href="{% url 'motors:car_list' %}" class="btn btn-outline-secondary">Back to Cars</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Cars -->
+    {% if related_cars %}
+    <div class="mt-5">
+        <h3>Other {{ car.brand.name }} Cars</h3>
+        <div class="row">
+            {% for related_car in related_cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card car-card h-100">
+                    {% if related_car.image %}
+                        <img src="{{ related_car.image.url }}" class="card-img-top car-image" alt="{{ related_car.name }}">
+                    {% else %}
+                        <div class="card-img-top car-image bg-light d-flex align-items-center justify-content-center">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ related_car.name }}</h5>
+                        <p class="card-text">
+                            <strong>Year:</strong> {{ related_car.year }}<br>
+                            <strong>Price:</strong> ${{ related_car.price|floatformat:2 }}<br>
+                            <strong>Fuel:</strong> {{ related_car.get_fuel_type_display }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'motors:car_detail' related_car.id %}" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

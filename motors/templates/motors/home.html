@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Motors{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8">
+            <h1 class="display-4 fw-bold">Welcome to Motors</h1>
+            <p class="lead">Discover the perfect car for your needs. Browse our extensive collection of vehicles from top brands.</p>
+            <div class="d-flex gap-3">
+                <a href="{% url 'motors:car_list' %}" class="btn btn-primary btn-lg">Browse Cars</a>
+                <a href="{% url 'motors:add_car' %}" class="btn btn-outline-primary btn-lg">Add Car</a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3>{{ total_cars }}</h3>
+                    <p class="mb-0">Total Cars</p>
+                </div>
+            </div>
+            <div class="card bg-success text-white mt-3">
+                <div class="card-body text-center">
+                    <h3>{{ total_brands }}</h3>
+                    <p class="mb-0">Brands</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Cars -->
+    {% if featured_cars %}
+    <section class="mb-5">
+        <h2 class="mb-4">Featured Cars</h2>
+        <div class="row">
+            {% for car in featured_cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card car-card h-100">
+                    {% if car.image %}
+                        <img src="{{ car.image.url }}" class="card-img-top car-image" alt="{{ car.name }}">
+                    {% else %}
+                        <div class="card-img-top car-image bg-light d-flex align-items-center justify-content-center">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.brand.name }} {{ car.name }}</h5>
+                        <p class="card-text">
+                            <strong>Year:</strong> {{ car.year }}<br>
+                            <strong>Price:</strong> ${{ car.price|floatformat:2 }}<br>
+                            <strong>Fuel:</strong> {{ car.get_fuel_type_display }}<br>
+                            <strong>Transmission:</strong> {{ car.get_transmission_display }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'motors:car_detail' car.id %}" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Recent Additions -->
+    {% if recent_cars %}
+    <section class="mb-5">
+        <h2 class="mb-4">Recent Additions</h2>
+        <div class="row">
+            {% for car in recent_cars %}
+            <div class="col-md-3 mb-4">
+                <div class="card car-card h-100">
+                    {% if car.image %}
+                        <img src="{{ car.image.url }}" class="card-img-top car-image" alt="{{ car.name }}">
+                    {% else %}
+                        <div class="card-img-top car-image bg-light d-flex align-items-center justify-content-center">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ car.brand.name }} {{ car.name }}</h6>
+                        <p class="card-text">
+                            <small class="text-muted">{{ car.year }} • ${{ car.price|floatformat:2 }}</small>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'motors:car_detail' car.id %}" class="btn btn-outline-primary btn-sm">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Call to Action -->
+    <section class="text-center py-5 bg-light rounded">
+        <h3>Ready to find your perfect car?</h3>
+        <p class="lead">Browse our complete inventory or add your own vehicle.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'motors:car_list' %}" class="btn btn-primary">View All Cars</a>
+            <a href="{% url 'motors:brand_list' %}" class="btn btn-outline-primary">View Brands</a>
+        </div>
+    </section>
+</div>
+{% endblock %}
