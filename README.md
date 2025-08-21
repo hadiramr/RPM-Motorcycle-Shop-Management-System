@@ -1,12 +1,12 @@
-<<<<<<< HEAD
-# Motors Django Project
+
+# Motorcycle Django Project
 
 A Django web application for managing and displaying car listings with brands, models, and images.
 
 ## Features
 
-- **Car Management**: Add, edit, and view cars with details like brand, name, year, price, and description
-- **Brand Management**: Organize cars by brands
+- **Motorcycle Management**: Add, edit, and view Motorcycle with details like brand, name, year, price, and description
+- **Brand Management**: Organize Motorcycle by brands
 - **Image Upload**: Support for car images with automatic resizing
 - **Admin Interface**: Full Django admin interface for managing data
 - **Responsive Design**: Modern Bootstrap-based UI that works on all devices
@@ -20,7 +20,7 @@ my_django_project/
 │   ├── urls.py           # Main URL configuration
 │   └── wsgi.py           # WSGI application
 ├── motors/               # Main app
-│   ├── models.py         # Database models (Brand, Car)
+│   ├── models.py         # Database models (Brand, Motorcycle)
 │   ├── views.py          # View functions
 │   ├── urls.py           # App URL patterns
 │   ├── admin.py          # Admin interface configuration
@@ -152,4 +152,3 @@ The interface supports Arabic language and is deployed locally with potential fo
 - **User Management:** Role-based login for admins and technicians; manage users.
 - **Inventory Management:** Track spare parts, auto-update stock, low-stock alerts.
 - **Reporting:** Sales, maintenance, profits, and technician performance reports.
->>>>>>> 0475bcb94e2cef796d26348e07a14118d96c3a8c
